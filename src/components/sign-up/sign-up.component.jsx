@@ -1,9 +1,9 @@
 import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import {connect} from 'react-redux';
 import "./sign-up.styles.scss";
+import { signUpStart} from '../../redux/user/user.actions';
 
 class SignUp extends React.Component {
  constructor(props) {
@@ -16,29 +16,16 @@ class SignUp extends React.Component {
          confirmPassword:""
      }
  }
-  handleSubmit  = async event => {
+  handleSubmit  = event  => {
       event.preventDefault();
-
+      const { signUpStart} = this.props;
       const { displayName, email, password, confirmPassword } = this.state;
-
+      console.log("inside the sign up");
       if (password !== confirmPassword){
           alert("password not match");
           return;
       }
-      try{
-        const {user} = await auth.createUserWithEmailAndPassword(email,password);
-        await createUserProfileDocument(user,{displayName});
-        this.setState({
-            displayName:"",
-            email:"",
-            password:"",
-            confirmPassword:""
-        })
-      }catch(err){
-        alert("something went wrong");
-        console.log(err);
-      }
-
+     signUpStart({email,password,displayName});
   }
 
   handleChange = event => {
@@ -47,12 +34,14 @@ class SignUp extends React.Component {
           [name]:value
       })
   }
+
  render(){
     const {displayName,email,password,confirmPassword} = this.state;
    return (
        <div className="signup">
          <h2 className="title">I do not have a account</h2>
          <span>Sign Up With Your Email And Password</span>
+
          <form onSubmit={this.handleSubmit}>
            <FormInput  type='text' name='displayName' value={displayName} onChange = {this.handleChange} label='Dispaly Name' required />
            <FormInput  type='email' name='email' value={email} onChange = {this.handleChange} label='Email' required />
@@ -69,4 +58,7 @@ class SignUp extends React.Component {
 
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+  signUpStart: userCredentials => dispatch(signUpStart(userCredentials))
+})
+export default connect(null,mapDispatchToProps)(SignUp);
