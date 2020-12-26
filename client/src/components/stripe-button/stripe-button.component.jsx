@@ -23,7 +23,7 @@ const StripeCheckoutButton = ({price}) => {
             alert(
               'There was an issue with your payment! Please make sure you use the provided credit card.'
             );
-          });
+          });       
       };
     return (
         <StripeCheckout 
