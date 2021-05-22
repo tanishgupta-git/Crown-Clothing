@@ -3,14 +3,14 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
-    apiKey: "AIzaSyC0DS38otKlycS0KLjHS0fp9o3goc8--is",
-    authDomain: "clothingweb-b51ec.firebaseapp.com",
-    databaseURL: "https://clothingweb-b51ec.firebaseio.com",
-    projectId: "clothingweb-b51ec",
-    storageBucket: "clothingweb-b51ec.appspot.com",
-    messagingSenderId: "158699612461",
-    appId: "1:158699612461:web:9d0906acfc909a913d4ba4",
-    measurementId: "G-2DDS0KBN1C"
+    apiKey:process.env.REACT_APP_apiKey,
+    authDomain:process.env.REACT_APP_authDomain,
+    databaseURL:process.env.REACT_APP_databaseURL,
+    projectId:process.env.REACT_APP_projectId,
+    storageBucket:process.env.REACT_APP_storageBucket,
+    messagingSenderId:process.env.REACT_APP_messagingSenderId,
+    appId:process.env.REACT_APP_appId,
+    measurementId:process.env.REACT_APP_measurementId
   };
 
   export const createUserProfileDocument = async (userAuth, additionalData) => {
